@@ -1,0 +1,25 @@
+# Ignore environment files
+devsolve-backend/.env
+devsolve-frontend/.env.local
+
+# Ignore dependencies
+devsolve-backend/node_modules/
+devsolve-frontend/node_modules/
+
+# Ignore build files
+devsolve-frontend/.next/
+devsolve-frontend/out/
+
+# Ignore logs
+devsolve-backend/logs/
+devsolve-frontend/logs/
+*.log
+
+# Ignore OS/System files
+.DS_Store
+Thumbs.db
+
+# Ignore package manager lock files (optional, but usually kept)
+# Uncomment if you don’t want to track lock files
+# devsolve-backend/package-lock.json
+# devsolve-frontend/package-lock.json
