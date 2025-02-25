@@ -8,20 +8,21 @@ export default function Navbar() {
 
   const handleLogout = async () => {
     await signOut({ redirect: false }); // Sign out from the session
-    router.push("/"); // Redirect to home page after logout(bug fixed)
+    router.push("/"); // Redirect to home page after logout
   };
 
   return (
     <nav className="navbar">
-      <h2> DevSolve</h2>
+      <div>
+        <h2 className="logo"> DevSolve</h2>
+        <p>Welcome, {session?.user?.name || "Guest"}</p> {/* Added optional chaining */}
+      </div>
       <div className="nav-links">
-          <Link href="/">Home</Link>
+        <Link href="/">Home</Link>
       </div>
       <div>
         {session ? (
-          <>
-            <button onClick={handleLogout}>Logout</button>
-          </>
+          <button onClick={handleLogout}>Logout</button>
         ) : (
           <button onClick={() => signIn()}>Login</button>
         )}

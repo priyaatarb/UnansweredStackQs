@@ -7,7 +7,7 @@ const db = pgp({
   database: process.env.DB_NAME,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
-  max: 30, // Maximum connections
+  max: 30,
 });
 
 // Create Users Table if not exists

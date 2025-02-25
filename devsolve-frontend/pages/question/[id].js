@@ -62,7 +62,7 @@ export default function QuestionPage() {
       const updated = await res.json();
   
       if (updated.success) {
-        refreshSolutions(); // Call refresh function after upvote
+        refreshSolutions(); 
       } else {
         console.error("Upvote failed");
       }
@@ -77,7 +77,7 @@ export default function QuestionPage() {
       const updated = await res.json();
   
       if (updated.success) {
-        refreshSolutions(); // Call refresh function after downvote
+        refreshSolutions(); 
       } else {
         console.error("Downvote failed");
       }

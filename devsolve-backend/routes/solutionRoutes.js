@@ -66,7 +66,7 @@ router.post("/downvote/:id", async (req, res) => {
   try {
     const { id } = req.params;
 
-    // Decrease votes count, ensuring it doesn’t go below zero
+    // Decrease votes count
     await db.none("UPDATE solutions SET votes = GREATEST(0, votes - 1) WHERE id = $1", [id]);
 
     // Get updated vote count
