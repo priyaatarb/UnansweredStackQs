@@ -105,12 +105,19 @@ export default function QuestionPage() {
         <div className="solutions-container">
           {solutions.map(sol => (
             <div key={sol.id} className="solution-card">
-               <p className="solution-text"><strong>{sol.solution}</strong></p>
-               <br/>
-              <p>Posted On: {new Date(sol.created_at).toLocaleString()}</p>
-              <p className="solution-votes">Votes: {sol.votes}</p>
-              <button className="upvote-btn" onClick={() => upvoteSolution(sol.id)}>Upvote</button>
-              <button className="downvote-btn" onClick={() => downvoteSolution(sol.id)}>Downvote</button>
+
+              <div className="button-container">
+                  <button className="upvote-btn" onClick={() => upvoteSolution(sol.id)}>Upvote</button>
+                  <p className="solution-votes">Votes: {sol.votes}</p>
+                  <button className="downvote-btn" onClick={() => downvoteSolution(sol.id)}>Downvote</button>  
+              </div> 
+
+              <div className="answer-cont">
+                <p className="solution-text"><strong>{sol.solution}</strong></p>
+                <br/>
+                <span>On: {new Date(sol.created_at).toLocaleString()}</span>
+              </div>
+             
             </div>
           ))}
         </div>

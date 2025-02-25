@@ -82,17 +82,20 @@ export default function Home() {
         <ul>
           {questions.length > 0
             ? questions.map((q) => (
-              <Link href={`/question/${q.id}`} className="question-link">
-                  <li key={q.id}>
+              
+                  <li key={q.id} className="question-card">
+                    <div className="question-info">
+                      <p><strong>{q.votes} Votes</strong> </p>  
+                    </div>
                     {}
-                    <Link href={`/question/${q.id}`} className="question-link">
-                      {q.title}
-                    </Link>
-                    <p>
-                      Votes: {q.votes} | Tags: {q.tags?.join(", ")}
-                    </p>
+                    <div>
+                      <Link href={`/question/${q.id}`} className="question-link">
+                        {q.title}
+                      </Link> 
+                      <p className="tag-names"> {q.tags?.join(", ")}</p>
+                    </div>
                   </li>
-                </Link>
+                
               ))
             : !loading && <p>No questions found.</p>}
         </ul>

@@ -19,7 +19,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
-    background: #3b1650;
+    background: #622d81;
     color: white;
     position: fixed;
   }
@@ -32,6 +32,14 @@
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .question-link{
+   color: #5e5cfa;
+  }
+
+  .question-link:hover{
+    color: #2522df;
   }
   
   /* Button */
@@ -116,8 +124,6 @@
   }
   
   .submit-btn {
-   
-   
     padding: 10px 15px;
     border: none;
     border-radius: 5px;
@@ -132,11 +138,14 @@
   }
   
   .solution-card {
-    border: 1px solid #ddd;
+    width: 100%;
+    display: flex;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
     padding: 10px;
     border-radius: 5px;
     background: #f9f9f9;
-    margin-bottom: 10px;
+  
   }
   
   .solution-text {
@@ -148,6 +157,31 @@
     font-size: 14px;
     color: #666;
     margin-top: 5px;
+  }
+
+  .button-container{
+    display: flex;
+    flex-direction: column;
+    width: 15%;
+    align-items: center;
+    justify-content: center;
+    border-right: 1px solid #ddd;
+    margin-right: 10px;
+  }
+
+  .answer-cont{
+    padding: 10px;
+    display: flex;
+    height: auto;
+    width: 100%;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .answer-cont span{
+   bottom: 0;
+   height: 14px;
+   
   }
   
 
@@ -206,26 +240,40 @@
   .nav-links a:hover{
     color: #cca6e2;
   }
+
+  ul{
+    margin: 0;
+    border-top:1px solid #ddd ;
+    padding: 0;
+
+  }
   
  
   li{
     text-align: justify;
-    margin: 20px;
     padding: 10px;
+    border-bottom: 1px solid #ddd;
     list-style-type: none;
     font-size: 1.3rem;
     
   }
 
-  li:hover{
-    background-color: #a5a5a5;
-    border-radius: 5px;
-
-  }
+  
 
   li p{
     margin: 5px;
     color: #333;
+  }
+
+  .question-card{
+    display: flex;
+  }
+
+  .question-info{
+    width: 15%;
+    text-align: right;
+    padding: 15px;
+    
   }
 
 
