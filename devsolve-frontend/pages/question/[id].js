@@ -3,6 +3,9 @@ import { useRouter } from "next/router";
 import { signIn, useSession } from "next-auth/react";
 import Navbar from "../../components/Navbar";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAngleUp, faAngleDown } from "@fortawesome/free-solid-svg-icons";
+
 export default function QuestionPage() {
   const router = useRouter();
   const { id } = router.query;
@@ -107,10 +110,14 @@ export default function QuestionPage() {
             <div key={sol.id} className="solution-card">
 
               <div className="button-container">
-                  <button className="upvote-btn" onClick={() => upvoteSolution(sol.id)}>Upvote</button>
-                  <p className="solution-votes">Votes: {sol.votes}</p>
-                  <button className="downvote-btn" onClick={() => downvoteSolution(sol.id)}>Downvote</button>  
-              </div> 
+                <button className="upvote-btn" onClick={() => upvoteSolution(sol.id)}>
+                  <FontAwesomeIcon icon={faAngleUp} />
+                </button>
+                <p className="solution-votes">Votes: {sol.votes}</p>
+                <button className="downvote-btn" onClick={() => downvoteSolution(sol.id)}>
+                  <FontAwesomeIcon icon={faAngleDown}/>
+                </button>
+              </div>
 
               <div className="answer-cont">
                 <p className="solution-text"><strong>{sol.solution}</strong></p>

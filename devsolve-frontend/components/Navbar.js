@@ -14,11 +14,12 @@ export default function Navbar() {
   return (
     <nav className="navbar">
       <div>
-        <h2 className="logo"> DevSolve</h2>
+      <Link href="/"> <h2 className="logo"> DevSolve</h2></Link>
         <p>Welcome, {session?.user?.name || "Guest"}</p> {/* Added optional chaining */}
       </div>
       <div className="nav-links">
         <Link href="/">Home</Link>
+        <Link href="/about">About</Link>
       </div>
       <div>
         {session ? (

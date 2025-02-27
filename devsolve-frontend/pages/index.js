@@ -55,25 +55,27 @@ export default function Home() {
         <h1>Unanswered StackOverflow Questions</h1>
 
         <div className="filter-bar">
-          <span>
-            <label>Filter by Tag:</label>
-            <input
-              type="text"
-              value={tag}
-              onChange={(e) => setTag(e.target.value)}
-              placeholder="e.g., javascript"
-            />
-          </span>
-          <span>
-            <label>Sort by:</label>
-            <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
-              <option value="">None</option>
-              <option value="difficulty">Difficulty (Votes)</option>
-              <option value="popularity">Popularity (Recent)</option>
-            </select>
+          <div className="span-div">
+              <span>
+                <label>Filter by Tag:</label>
+                <input
+                  type="text"
+                  value={tag}
+                  onChange={(e) => setTag(e.target.value)}
+                  placeholder="e.g., javascript"
+                />
+              </span>
+              <span>
+                <label>Sort by:</label>
+                <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
+                  <option value="">None</option>
+                  <option value="difficulty">Difficulty (Votes)</option>
+                  <option value="popularity">Popularity (Recent)</option>
+                </select>
 
-            <button onClick={fetchQuestions}>Apply</button>
-          </span>
+                <button onClick={fetchQuestions}>Apply</button>
+              </span>
+          </div>
         </div>
 
         {loading && <p>Loading questions...</p>}
@@ -88,7 +90,7 @@ export default function Home() {
                       <p><strong>{q.votes} Votes</strong> </p>  
                     </div>
                     {}
-                    <div>
+                    <div className="question-text">
                       <Link href={`/question/${q.id}`} className="question-link">
                         {q.title}
                       </Link> 

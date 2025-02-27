@@ -36,7 +36,7 @@ router.post("/vote", async (req, res) => {
 router.get("/:question_id", async (req, res) => {
   try {
     const solutions = await db.any(
-      "SELECT * FROM solutions WHERE question_id = $1 ORDER BY votes DESC",
+      "SELECT * FROM solutions WHERE question_id = $1 ORDER BY created_at DESC",
       [req.params.question_id]
     );
     res.json(solutions);
@@ -89,7 +89,7 @@ router.get("/:id", async (req, res) => {
        FROM solutions s
        JOIN users u ON s.user_id = u.id
        WHERE s.question_id = $1
-       ORDER BY s.votes DESC`,
+       ORDER BY s.created_at DESC`,
       [id]
     );
 
