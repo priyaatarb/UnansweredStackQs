@@ -152,7 +152,7 @@ h1 {
 }
 
 .solution-text {
-  font-size: 1.2rem;
+  font-size: 1rem;
   color: #5e5cfa;
 }
 
@@ -174,8 +174,8 @@ h1 {
 
 .upvote-btn:hover,
 .downvote-btn:hover {
-  border: 1px solid black;
-  background-color: white;
+  background-color: #5e5cfa;
+  color: white;
 }
 
 .answer-cont {
@@ -256,7 +256,7 @@ li {
   padding: 10px;
   border-bottom: 1px solid #ddd;
   list-style-type: none;
-  font-size: 1.3rem;
+  font-size: 1rem;
 }
 
 li p {
