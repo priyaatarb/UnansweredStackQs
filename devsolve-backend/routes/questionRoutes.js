@@ -7,28 +7,53 @@ const router = express.Router();
 router.get("/", async (req, res) => {
   try {
     let { tag, sortBy } = req.query;
-    let query = "SELECT * FROM scrapquestions";
+    
+    // ✅ Base SQL query
+    let query = `
+      SELECT 
+        q.id, 
+        q.title, 
+        q.link,
+        q.summary, 
+        q.votes, 
+        q.tags, 
+        q.created_at,
+        COUNT(s.id) AS answer_count  
+      FROM scrapquestions q
+      LEFT JOIN solutions s ON s.question_id = q.id
+    `;
+
     let params = [];
 
+    // ✅ Filter by tag (if provided)
     if (tag) {
-      query += " WHERE tags::text ILIKE $1"; 
+      query += " WHERE q.tags::text ILIKE $1";
       params.push(`%${tag}%`);
     }
 
+    query += " GROUP BY q.id, q.title, q.link, q.summary, q.votes, q.tags, q.created_at";
+
+    // ✅ Sorting logic
     if (sortBy) {
-      if (sortBy === "difficulty") {
-        query += params.length ? " ORDER BY votes DESC" : " ORDER BY votes DESC";
-      } else if (sortBy === "popularity") {
-        query += params.length ? " ORDER BY created_at DESC" : " ORDER BY created_at DESC";
+      if (sortBy === "popularity") {
+        query += " ORDER BY q.votes DESC"; // Most votes first
+      } else if (sortBy === "recent") {
+        query += " ORDER BY q.created_at DESC"; // Most recent first
       }
+    } else {
+      query += " ORDER BY q.created_at DESC"; // Default sorting
     }
 
     const questions = await db.any(query, params);
     res.json(questions);
   } catch (err) {
+    console.error("Error fetching questions:", err);
     res.status(500).json({ error: "Failed to fetch questions" });
   }
 });
+
+
+
 
 // GET question by ID
 router.get("/:id", async (req, res) => {

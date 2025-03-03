@@ -2,14 +2,20 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { signIn, useSession } from "next-auth/react";
 import Navbar from "../components/Navbar";
+import { useRouter } from "next/router";
+
 
 export default function Home() {
   const [questions, setQuestions] = useState([]);
+  const [solutions, setSolutions] = useState([]);
   const [tag, setTag] = useState("");
   const [sortBy, setSortBy] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const { data: session, status } = useSession();
+  const router = useRouter();
+const { id } = router.query;
+
 
   useEffect(() => {
     if (!session && status !== "loading") {
@@ -45,6 +51,15 @@ export default function Home() {
   };
 
   useEffect(() => {
+    if (id) {
+
+      fetch(`http://localhost:5000/api/solutions/${id}`)
+        .then(res => res.json())
+        .then(data => setSolutions(data));
+    }
+  }, [id]);
+
+  useEffect(() => {
     fetchQuestions();
   }, [tag, sortBy]);
 
@@ -69,8 +84,8 @@ export default function Home() {
                 <label>Sort by:</label>
                 <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
                   <option value="">None</option>
-                  <option value="difficulty">Popularity (Most interacted)</option>
-                  <option value="popularity">Recently Added</option>
+                  <option value="difficulty">Recently Added</option>
+                  <option value="popularity">Popularity (Most interacted)</option>
                 </select>
 
                 <button onClick={fetchQuestions}>Apply</button>
@@ -88,6 +103,7 @@ export default function Home() {
                   <li key={q.id} className="question-card">
                     <div className="question-info">
                       <p><strong>{q.votes} Votes</strong> </p>  
+                      <p><strong>{q.answer_count} Answers</strong></p> 
                     </div>
                     {}
                     <div className="question-text">
