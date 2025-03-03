@@ -8,14 +8,14 @@ router.get("/", async (req, res) => {
   try {
     let { tag, sortBy } = req.query;
     
-    // ✅ Base SQL query
+    
     let query = `
       SELECT 
         q.id, 
         q.title, 
         q.link,
         q.summary, 
-        q.votes, 
+        COALESCE(SUM(s.votes), 0) AS vote_count,
         q.tags, 
         q.created_at,
         COUNT(s.id) AS answer_count  
@@ -25,7 +25,7 @@ router.get("/", async (req, res) => {
 
     let params = [];
 
-    // ✅ Filter by tag (if provided)
+    
     if (tag) {
       query += " WHERE q.tags::text ILIKE $1";
       params.push(`%${tag}%`);
@@ -33,15 +33,15 @@ router.get("/", async (req, res) => {
 
     query += " GROUP BY q.id, q.title, q.link, q.summary, q.votes, q.tags, q.created_at";
 
-    // ✅ Sorting logic
+   
     if (sortBy) {
       if (sortBy === "popularity") {
-        query += " ORDER BY q.votes DESC"; // Most votes first
+        query += " ORDER BY vote_count DESC"; 
       } else if (sortBy === "recent") {
-        query += " ORDER BY q.created_at DESC"; // Most recent first
+        query += " ORDER BY q.created_at DESC"; 
       }
     } else {
-      query += " ORDER BY q.created_at DESC"; // Default sorting
+      query += " ORDER BY q.created_at DESC"; 
     }
 
     const questions = await db.any(query, params);

@@ -85,7 +85,7 @@ const { id } = router.query;
                 <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
                   <option value="">None</option>
                   <option value="difficulty">Recently Added</option>
-                  <option value="popularity">Popularity (Most interacted)</option>
+                  <option value="popularity">Most Voted</option>
                 </select>
 
                 <button onClick={fetchQuestions}>Apply</button>
@@ -102,8 +102,8 @@ const { id } = router.query;
               
                   <li key={q.id} className="question-card">
                     <div className="question-info">
-                      <p><strong>{q.votes} Votes</strong> </p>  
-                      <p><strong>{q.answer_count} Answers</strong></p> 
+                      <p><strong>{q.vote_count} Votes</strong> </p>  
+                      <p><strong>{q.answer_count} Answers </strong></p> 
                     </div>
                     {}
                     <div className="question-text">
