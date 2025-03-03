@@ -69,8 +69,8 @@ export default function Home() {
                 <label>Sort by:</label>
                 <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
                   <option value="">None</option>
-                  <option value="difficulty">Difficulty (Votes)</option>
-                  <option value="popularity">Popularity (Recent)</option>
+                  <option value="difficulty">Popularity (Most interacted)</option>
+                  <option value="popularity">Recently Added</option>
                 </select>
 
                 <button onClick={fetchQuestions}>Apply</button>
@@ -94,6 +94,7 @@ export default function Home() {
                       <Link href={`/question/${q.id}`} className="question-link">
                         {q.title}
                       </Link> 
+                      <p>{q.summary}</p>
                       <p className="tag-names"> {q.tags?.join(", ")}</p>
                     </div>
                   </li>

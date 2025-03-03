@@ -24,6 +24,7 @@ const scrapeUnansweredQuestions = async (tag = "javascript") => {
       return Array.from(document.querySelectorAll(".s-post-summary")).map((el) => ({
         title: el.querySelector(".s-link")?.innerText || "No Title",
         link: el.querySelector(".s-link")?.href || "#",
+        summary:  el.querySelector(".s-post-summary--content-excerpt")?.innerText || "No Summary",
         votes: parseInt(el.querySelector(".s-post-summary--stats-item-number")?.innerText || "0"),
         tags: Array.from(el.querySelectorAll(".post-tag")).map(tag => tag.innerText),
       }));
@@ -34,7 +35,7 @@ const scrapeUnansweredQuestions = async (tag = "javascript") => {
     
     for (const q of questions) {
       try {
-        const result = await addQuestion(q.title, q.link, q.votes, q.tags);
+        const result = await addQuestion(q.title, q.link,q.summary, q.votes, q.tags);
         if (result) {
           console.log(`Saved: ${q.title}`);
         } else {

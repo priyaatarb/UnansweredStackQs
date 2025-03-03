@@ -32,7 +32,29 @@ const createUsersTable = async () => {
 
 createUsersTable();
 
-module.exports = db;
+
+//new Table for question storage
+const createScrapQuestionsTable = async () => {
+  try {
+    await db.none(`
+      CREATE TABLE IF NOT EXISTS questions (
+        id SERIAL PRIMARY KEY,
+        title TEXT NOT NULL,
+        link TEXT UNIQUE NOT NULL,
+        summary TEXT NOT NULL,
+        votes INTEGER DEFAULT 0,
+        tags TEXT[],
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      )
+    `);
+    console.log("ScrapQuestions table created");
+  } catch (err) {
+    console.error("Error creating questions table:", err);
+  }
+};
+
+createScrapQuestionsTable();
+
 
 // Create questions Table if not exists
 const createQuestionsTable = async () => {
@@ -42,6 +64,7 @@ const createQuestionsTable = async () => {
           id SERIAL PRIMARY KEY,
           title TEXT NOT NULL,
           link TEXT UNIQUE NOT NULL,
+          summary TEXT NOT NULL,
           votes INTEGER DEFAULT 0,
           tags TEXT[],
           created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -78,4 +101,4 @@ const createQuestionsTable = async () => {
   
   createSolutionsTable();
   
-  
+  module.exports = db;

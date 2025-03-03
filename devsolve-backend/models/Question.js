@@ -1,13 +1,13 @@
 const db = require("../config/db");
 
 module.exports = {
-  addQuestion: async (title, link, votes, tags) => {
+  addQuestion: async (title, link, summary, votes, tags) => {
     try {
       const result = await db.oneOrNone(
-        `INSERT INTO questions (title, link, votes, tags) 
-         VALUES ($1, $2, $3, $4) 
+        `INSERT INTO scrapquestions (title, link, summary, votes, tags) 
+         VALUES ($1, $2, $3, $4, $5) 
          ON CONFLICT (link) DO NOTHING RETURNING *`,
-        [title, link, votes, tags]
+        [title, link, summary, votes, tags]
       );
 
       if (result) {
@@ -24,6 +24,6 @@ module.exports = {
   },
 
   getAllQuestions: async () => {
-    return await db.any("SELECT * FROM questions ORDER BY created_at DESC");
+    return await db.any("SELECT * FROM scrapquestions ORDER BY created_at DESC");
   },
 };

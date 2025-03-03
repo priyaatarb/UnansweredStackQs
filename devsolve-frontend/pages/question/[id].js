@@ -95,6 +95,7 @@ export default function QuestionPage() {
       
       <div className="question-container">
         <h1 className="question-title">{question?.title}</h1>
+        <p>{question?.summary}</p>
         <p className="question-tags">{question?.tags.join(", ")}</p>
 
         <textarea

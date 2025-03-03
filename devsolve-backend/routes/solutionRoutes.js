@@ -80,23 +80,23 @@ router.post("/downvote/:id", async (req, res) => {
 });
 
 
-router.get("/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
+// router.get("/:id", async (req, res) => {
+//   try {
+//     const { id } = req.params;
 
-    const solutions = await db.any(
-      `SELECT s.id, s.solution, s.votes, s.created_at, u.username
-       FROM solutions s
-       JOIN users u ON s.user_id = u.id
-       WHERE s.question_id = $1
-       ORDER BY s.created_at DESC`,
-      [id]
-    );
+//     const solutions = await db.any(
+//       `SELECT s.id, s.solution, s.votes, s.created_at, u.username
+//        FROM solutions s
+//        JOIN users u ON s.user_id = u.id
+//        WHERE s.question_id = $1
+//        ORDER BY s.created_at DESC`,
+//       [id]
+//     );
 
-    res.json(solutions);
-  } catch (err) {
-    res.status(500).json({ error: "Failed to fetch solutions" });
-  }
-});
+//     res.json(solutions);
+//   } catch (err) {
+//     res.status(500).json({ error: "Failed to fetch solutions" });
+//   }
+// });
 
 module.exports = router;

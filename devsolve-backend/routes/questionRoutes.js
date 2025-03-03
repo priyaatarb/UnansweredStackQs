@@ -7,7 +7,7 @@ const router = express.Router();
 router.get("/", async (req, res) => {
   try {
     let { tag, sortBy } = req.query;
-    let query = "SELECT * FROM questions";
+    let query = "SELECT * FROM scrapquestions";
     let params = [];
 
     if (tag) {
@@ -34,7 +34,7 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const question = await db.oneOrNone("SELECT * FROM questions WHERE id = $1", [id]); 
+    const question = await db.oneOrNone("SELECT * FROM scrapquestions WHERE id = $1", [id]); 
     
     if (!question) {
       return res.status(404).json({ error: "Question not found" });
