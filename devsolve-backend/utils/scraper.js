@@ -4,6 +4,21 @@ const { addQuestion } = require("../models/Question");
 
 puppeteer.use(StealthPlugin());
 
+const scrapeFullQuestion = async (questionUrl) => {
+  const browser = await puppeteer.launch({ headless: true, args: ["--no-sandbox"] });
+  const page = await browser.newPage();
+  
+  await page.goto(questionUrl, { waitUntil: "networkidle2", timeout: 90000 });
+
+  const fullQuestion = await page.evaluate(() => {
+    const questionBody = document.querySelector(".s-prose.js-post-body");
+    return questionBody ? questionBody.innerHTML : "No Full Question Available";
+  });
+
+  await browser.close();
+  return fullQuestion;
+};
+
 const scrapeUnansweredQuestions = async (tag = "javascript") => {
   const url = `https://stackoverflow.com/questions/tagged/${tag}?tab=Unanswered`;
 
@@ -32,10 +47,11 @@ const scrapeUnansweredQuestions = async (tag = "javascript") => {
 
     await browser.close();
 
-    
     for (const q of questions) {
       try {
-        const result = await addQuestion(q.title, q.link,q.summary, q.votes, q.tags);
+        const full_question = await scrapeFullQuestion(q.link);
+        const result = await addQuestion(q.title, q.link, q.summary, full_question, q.votes, q.tags);
+
         if (result) {
           console.log(`Saved: ${q.title}`);
         } else {

@@ -13,6 +13,7 @@ export default function QuestionPage() {
   const [solutions, setSolutions] = useState([]);
   const [solutionText, setSolutionText] = useState("");
   const { data: session, status } = useSession();
+  const [showFullQuestion, setShowFullQuestion] = useState(false);
 
   useEffect(() => {
     if (!session && status !== "loading") {
@@ -95,9 +96,31 @@ export default function QuestionPage() {
       
       <div className="question-container">
         <h1 className="question-title">{question?.title}</h1>
-        <p>{question?.summary}</p>
-        <p className="question-tags">{question?.tags.join(", ")}</p>
+        {!showFullQuestion ? (
+        <>
+          <p>{question?.summary}
+            <button className="read-more-btn" onClick={() => setShowFullQuestion(true)}>
+              Read More
+            </button>
+          </p>
+          
+        </>
+      ) : (
+        <>
+          <div dangerouslySetInnerHTML={{ __html: question?.full_question }} />
+          <button className="read-more-btn" onClick={() => setShowFullQuestion(false)}>
+            Show Less
+          </button>
+        </>
+      )}
 
+<p className="tag-container">
+        {question?.tags.map((tag, index) => (
+          <span key={index} className="tag-item">
+             {tag}
+           </span>
+        ))}
+      </p>
         <textarea
           className="solution-input"
           value={solutionText}

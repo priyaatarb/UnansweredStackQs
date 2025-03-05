@@ -37,11 +37,12 @@ createUsersTable();
 const createScrapQuestionsTable = async () => {
   try {
     await db.none(`
-      CREATE TABLE IF NOT EXISTS questions (
+      CREATE TABLE IF NOT EXISTS scrapquestions (
         id SERIAL PRIMARY KEY,
         title TEXT NOT NULL,
         link TEXT UNIQUE NOT NULL,
         summary TEXT NOT NULL,
+        full_question TEXT NOT NULL,
         votes INTEGER DEFAULT 0,
         tags TEXT[],
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -57,26 +58,26 @@ createScrapQuestionsTable();
 
 
 // Create questions Table if not exists
-const createQuestionsTable = async () => {
-    try {
-      await db.none(`
-        CREATE TABLE IF NOT EXISTS questions (
-          id SERIAL PRIMARY KEY,
-          title TEXT NOT NULL,
-          link TEXT UNIQUE NOT NULL,
-          summary TEXT NOT NULL,
-          votes INTEGER DEFAULT 0,
-          tags TEXT[],
-          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-        )
-      `);
-      console.log("Questions table created");
-    } catch (err) {
-      console.error("Error creating questions table:", err);
-    }
-  };
+// const createQuestionsTable = async () => {
+//     try {
+//       await db.none(`
+//         CREATE TABLE IF NOT EXISTS questions (
+//           id SERIAL PRIMARY KEY,
+//           title TEXT NOT NULL,
+//           link TEXT UNIQUE NOT NULL,
+//           summary TEXT NOT NULL,
+//           votes INTEGER DEFAULT 0,
+//           tags TEXT[],
+//           created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+//         )
+//       `);
+//       console.log("Questions table created");
+//     } catch (err) {
+//       console.error("Error creating questions table:", err);
+//     }
+//   };
   
-  createQuestionsTable();
+//   createQuestionsTable();
 
 
 

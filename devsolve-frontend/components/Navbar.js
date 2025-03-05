@@ -7,19 +7,25 @@ export default function Navbar() {
   const router = useRouter();
 
   const handleLogout = async () => {
-    await signOut({ redirect: false }); // Sign out from the session
-    router.push("/"); // Redirect to home page after logout
+    await signOut({ redirect: false });
+    router.push("/");
   };
 
   return (
     <nav className="navbar">
       <div>
-      <Link href="/"> <h2 className="logo"> DevSolve</h2></Link>
-        <p>Welcome, {session?.user?.name || "Guest"}</p> {/* Added optional chaining */}
+        <Link href="/">
+          <h2 className="logo">DevSolve</h2>
+        </Link>
+        <p>Welcome, {session?.user?.name || "Guest"}</p>
       </div>
       <div className="nav-links">
-        <Link href="/">Home</Link>
-        <Link href="/about">About</Link>
+        <Link href="/" className={router.pathname === "/" ? "active" : ""}>
+          Home
+        </Link>
+        <Link href="/about" className={router.pathname === "/about" ? "active" : ""}>
+          About
+        </Link>
       </div>
       <div>
         {session ? (

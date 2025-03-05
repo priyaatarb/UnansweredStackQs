@@ -112,10 +112,20 @@ h1 {
   margin-bottom: 10px;
 }
 
-.question-tags {
-  color: #666;
+
+.tag-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px; 
+}
+
+.tag-item {
+  background-color: #d1c4e9; 
+  color: black;
+  padding: 5px 10px;
+  border-radius: 5px;
   font-size: 14px;
-  margin-bottom: 20px;
+  display: inline-block;
 }
 
 .solution-input {
@@ -135,6 +145,17 @@ h1 {
   border-radius: 5px;
   cursor: pointer;
   font-size: 16px;
+}
+
+.read-more-btn{
+  background: none;
+  color: #5e5cfa;
+
+}
+
+.read-more-btn:hover{
+  background: none;
+  color: #2522df;
 }
 
 .solutions-container {

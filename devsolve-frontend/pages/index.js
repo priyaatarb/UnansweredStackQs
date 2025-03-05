@@ -111,7 +111,13 @@ const { id } = router.query;
                         {q.title}
                       </Link> 
                       <p>{q.summary}</p>
-                      <p className="tag-names"> {q.tags?.join(", ")}</p>
+                      <p className="tag-container">
+                        {q?.tags.map((tag, index) => (
+                          <span key={index} className="tag-item">
+                            {tag}
+                          </span>
+                        ))}
+                      </p>
                     </div>
                   </li>
                 

@@ -1,24 +1,24 @@
 const db = require("../config/db");
 
 module.exports = {
-  addQuestion: async (title, link, summary, votes, tags) => {
+  addQuestion: async (title, link, summary, full_question, votes, tags) => {
     try {
       const result = await db.oneOrNone(
-        `INSERT INTO scrapquestions (title, link, summary, votes, tags) 
-         VALUES ($1, $2, $3, $4, $5) 
+        `INSERT INTO scrapquestions (title, link, summary, full_question, votes, tags) 
+         VALUES ($1, $2, $3, $4, $5, $6) 
          ON CONFLICT (link) DO NOTHING RETURNING *`,
-        [title, link, summary, votes, tags]
+        [title, link, summary, full_question, votes, tags]
       );
 
       if (result) {
-        console.log(" Inserted Question:", result.title);
+        console.log("Inserted Question:", result.title);
       } else {
-        console.log(" Skipped (Already Exists):", title);
+        console.log("Skipped (Already Exists):", title);
       }
 
       return result;
     } catch (err) {
-      console.error(" Error inserting question:", err);
+      console.error("Error inserting question:", err);
       return null;
     }
   },
