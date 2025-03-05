@@ -119,6 +119,20 @@ h1 {
   gap: 5px; 
 }
 
+.nav-links a {
+  text-decoration: none;
+  border-radius: 5px;
+  padding: 10px;
+  color: white;
+}
+
+.nav-links a.active {
+  font-weight: bold;
+  color: white; 
+  border-bottom: 2px solid #eef1f3; 
+}
+
+
 .tag-item {
   background-color: #d1c4e9; 
   color: black;
