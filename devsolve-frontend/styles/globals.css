@@ -19,7 +19,8 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
-  background: #622d81;
+  background: linear-gradient(130deg, #3314e2,  #bc16dd);
+  /* background: linear-gradient(130deg, #15081d, #f64f59); */
   color: white;
   position: fixed;
 }
@@ -252,6 +253,7 @@ a {
 
 ::-webkit-scrollbar {
   width: 10px;
+  height: 10px;
 }
 
 /* Track */
@@ -393,4 +395,17 @@ span button {
 .text-box > p {
   font-size: 1rem;
   color: white;
+}
+
+pre {
+  background: #282c34;
+  padding: 10px;
+  border-radius: 5px;
+  overflow-x: auto;
+  white-space: pre-wrap;
+}
+
+code {
+  color: #2f25c0;
+  font-family: "Fira Code", monospace;
 }

@@ -3,6 +3,12 @@ import { useRouter } from "next/router";
 import { signIn, useSession } from "next-auth/react";
 import Navbar from "../../components/Navbar";
 
+// Imported Prism for syntax highlighting and the theme 
+import Prism from "prismjs";
+import "prismjs/themes/prism-tomorrow.css"; // Dark theme for syntax highlighting
+import "prismjs/components/prism-javascript"; // Load JavaScript syntax
+import "prismjs/components/prism-python"; // Load Python syntax
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleUp, faAngleDown } from "@fortawesome/free-solid-svg-icons";
 
@@ -33,6 +39,14 @@ export default function QuestionPage() {
     }
   }, [id]);
 
+  // Apply syntax highlighting when the question is loaded
+  useEffect(() => {
+    if (question?.full_question) {
+      Prism.highlightAll();
+    }
+  }, [question]);
+  
+
   const submitSolution = () => {
     if (!solutionText.trim()) {
       alert("Insert your answer first before submitting!");
@@ -53,7 +67,7 @@ export default function QuestionPage() {
     try {
       const res = await fetch(`http://localhost:5000/api/solutions/${id}`);
       const data = await res.json();
-      setSolutions(data); // Update the state with the latest solutions
+      setSolutions(data); 
     } catch (error) {
       console.error("Error fetching updated solutions:", error);
     }
@@ -107,7 +121,7 @@ export default function QuestionPage() {
         </>
       ) : (
         <>
-          <div dangerouslySetInnerHTML={{ __html: question?.full_question }} />
+          <div className="question-content" dangerouslySetInnerHTML={{ __html: question?.full_question }} />
           <button className="read-more-btn" onClick={() => setShowFullQuestion(false)}>
             Show Less
           </button>
