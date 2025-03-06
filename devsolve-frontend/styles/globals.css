@@ -203,7 +203,7 @@ h1 {
   flex-direction: column;
   width: 15%;
   align-items: center;
-  justify-content: center;
+  justify-content: start;
   border-right: 1px solid #ddd;
   margin-right: 10px;
 }
@@ -408,4 +408,10 @@ pre {
 code {
   color: #2f25c0;
   font-family: "Fira Code", monospace;
+}
+
+.ck-editor__editable {
+  min-height: 200px !important;
+  border: 1px solid #ccc;
+  padding: 10px;
 }

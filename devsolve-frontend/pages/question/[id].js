@@ -1,25 +1,35 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import { signIn, useSession } from "next-auth/react";
+import dynamic from "next/dynamic";
 import Navbar from "../../components/Navbar";
-
-// Imported Prism for syntax highlighting and the theme 
 import Prism from "prismjs";
-import "prismjs/themes/prism-tomorrow.css"; // Dark theme for syntax highlighting
-import "prismjs/components/prism-javascript"; // Load JavaScript syntax
-import "prismjs/components/prism-python"; // Load Python syntax
-
+import "prismjs/themes/prism-tomorrow.css";
+import "prismjs/components/prism-javascript";
+import "prismjs/components/prism-python";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleUp, faAngleDown } from "@fortawesome/free-solid-svg-icons";
+
+// ✅ Dynamically import JoditEditor to fix SSR issues
+const JoditEditor = dynamic(() => import("jodit-react").then(mod => mod.default), { ssr: false });
 
 export default function QuestionPage() {
   const router = useRouter();
   const { id } = router.query;
   const [question, setQuestion] = useState(null);
   const [solutions, setSolutions] = useState([]);
-  const [solutionText, setSolutionText] = useState("");
+  const [solutionText, setSolutionText] = useState(""); 
   const { data: session, status } = useSession();
   const [showFullQuestion, setShowFullQuestion] = useState(false);
+  const editor = useRef(null);
+  const [content, setContent] = useState("");
+
+  // ✅ Add missing Jodit editor configuration
+  const editorConfig = {
+    readonly: false,
+    height: 300,
+    placeholder: "Write your answer here...",
+  };
 
   useEffect(() => {
     if (!session && status !== "loading") {
@@ -35,20 +45,23 @@ export default function QuestionPage() {
 
       fetch(`http://localhost:5000/api/solutions/${id}`)
         .then(res => res.json())
-        .then(data => setSolutions(data));
+        .then(data => {
+          setSolutions(data.map(sol => ({
+            ...sol,
+            solution: typeof sol.solution === "string" ? sol.solution : JSON.stringify(sol.solution)
+          })));
+        });
     }
   }, [id]);
 
-  // Apply syntax highlighting when the question is loaded
   useEffect(() => {
     if (question?.full_question) {
       Prism.highlightAll();
     }
   }, [question]);
-  
 
   const submitSolution = () => {
-    if (!solutionText.trim()) {
+    if (!content || typeof content !== "string" || !content.trim()) {
       alert("Insert your answer first before submitting!");
       return;
     }
@@ -56,9 +69,13 @@ export default function QuestionPage() {
     fetch("http://localhost:5000/api/solutions/add", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ question_id: id, user_id: session.user.id, solution: solutionText }),
+      body: JSON.stringify({
+        question_id: id,
+        user_id: session?.user?.id,
+        solution: content.trim(),
+      }),
     }).then(() => {
-      setSolutionText("");
+      setContent("");
       refreshSolutions();
     });
   };
@@ -67,20 +84,21 @@ export default function QuestionPage() {
     try {
       const res = await fetch(`http://localhost:5000/api/solutions/${id}`);
       const data = await res.json();
-      setSolutions(data); 
+      setSolutions(data.map(sol => ({
+        ...sol,
+        solution: typeof sol.solution === "string" ? sol.solution : JSON.stringify(sol.solution)
+      })));
     } catch (error) {
       console.error("Error fetching updated solutions:", error);
     }
   };
-  
 
   const upvoteSolution = async (solutionId) => {
     try {
       const res = await fetch(`http://localhost:5000/api/solutions/upvote/${solutionId}`, { method: "POST" });
       const updated = await res.json();
-  
       if (updated.success) {
-        refreshSolutions(); 
+        refreshSolutions();
       } else {
         console.error("Upvote failed");
       }
@@ -88,14 +106,13 @@ export default function QuestionPage() {
       console.error("Error in upvoteSolution:", error);
     }
   };
-  
+
   const downvoteSolution = async (solutionId) => {
     try {
       const res = await fetch(`http://localhost:5000/api/solutions/downvote/${solutionId}`, { method: "POST" });
       const updated = await res.json();
-  
       if (updated.success) {
-        refreshSolutions(); 
+        refreshSolutions();
       } else {
         console.error("Downvote failed");
       }
@@ -103,66 +120,64 @@ export default function QuestionPage() {
       console.error("Error in downvoteSolution:", error);
     }
   };
-  
-  
+
   return (
     <>
-      
+      <Navbar />
       <div className="question-container">
         <h1 className="question-title">{question?.title}</h1>
         {!showFullQuestion ? (
-        <>
-          <p>{question?.summary}
-            <button className="read-more-btn" onClick={() => setShowFullQuestion(true)}>
-              Read More
-            </button>
-          </p>
-          
-        </>
-      ) : (
-        <>
-          <div className="question-content" dangerouslySetInnerHTML={{ __html: question?.full_question }} />
-          <button className="read-more-btn" onClick={() => setShowFullQuestion(false)}>
-            Show Less
-          </button>
-        </>
-      )}
+          <>
+            <p>{question?.summary}
+              <button className="read-more-btn" onClick={() => setShowFullQuestion(true)}>Read More</button>
+            </p>
+          </>
+        ) : (
+          <>
+            <div className="question-content" dangerouslySetInnerHTML={{ __html: question?.full_question }} />
+            <button className="read-more-btn" onClick={() => setShowFullQuestion(false)}>Show Less</button>
+          </>
+        )}
 
-<p className="tag-container">
-        {question?.tags.map((tag, index) => (
-          <span key={index} className="tag-item">
-             {tag}
-           </span>
-        ))}
-      </p>
-        <textarea
-          className="solution-input"
-          value={solutionText}
-          onChange={(e) => setSolutionText(e.target.value)}
+        <p className="tag-container">
+          {question?.tags?.map((tag, index) => (
+            <span key={index} className="tag-item">{tag}</span>
+          ))}
+        </p>
+
+        {/* ✅ Jodit Editor with Fixed Configuration */}
+        <JoditEditor
+          ref={editor}
+          value={content}
+          config={editorConfig}
+          onChange={newContent => setContent(newContent)}
         />
+
         <button className="submit-btn" onClick={submitSolution}>Submit Solution</button>
 
         <h2>Solutions:</h2>
         <div className="solutions-container">
           {solutions.map(sol => (
             <div key={sol.id} className="solution-card">
-
               <div className="button-container">
                 <button className="upvote-btn" onClick={() => upvoteSolution(sol.id)}>
                   <FontAwesomeIcon icon={faAngleUp} />
                 </button>
                 <p className="solution-votes">Votes: {sol.votes}</p>
                 <button className="downvote-btn" onClick={() => downvoteSolution(sol.id)}>
-                  <FontAwesomeIcon icon={faAngleDown}/>
+                  <FontAwesomeIcon icon={faAngleDown} />
                 </button>
               </div>
 
               <div className="answer-cont">
-                <p className="solution-text"><strong>{sol.solution}</strong></p>
-                <br/>
+                {sol.solution.includes("<") ? (
+                  <div dangerouslySetInnerHTML={{ __html: sol.solution }} />
+                ) : (
+                  <p className="solution-text">{sol.solution}</p>
+                )}
+                <br />
                 <span>On: {new Date(sol.created_at).toLocaleString()}</span>
               </div>
-             
             </div>
           ))}
         </div>
