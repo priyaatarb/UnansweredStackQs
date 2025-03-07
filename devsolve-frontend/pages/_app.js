@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 import Navbar from "../components/Navbar";
 import "../styles/globals.css";
+import Head from "next/head"; 
 
 function AuthGuard({ children }) {
   const { data: session, status } = useSession();
@@ -21,6 +22,18 @@ function AuthGuard({ children }) {
 export default function App({ Component, pageProps }) {
   return (
     <SessionProvider session={pageProps.session}>
+      
+      <Head>
+        <link
+          href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css"
+          rel="stylesheet"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"
+          defer
+        ></script>
+      </Head>
+      
       <Navbar />
       <AuthGuard>
         <Component {...pageProps} />

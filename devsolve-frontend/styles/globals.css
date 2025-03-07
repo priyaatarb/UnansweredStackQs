@@ -23,6 +23,7 @@ body {
   /* background: linear-gradient(130deg, #15081d, #f64f59); */
   color: white;
   position: fixed;
+  z-index: 10;
 }
 
 /* Container */
@@ -410,8 +411,11 @@ code {
   font-family: "Fira Code", monospace;
 }
 
-.ck-editor__editable {
-  min-height: 200px !important;
-  border: 1px solid #ccc;
+.tiptap {
+  min-height: 200px;
   padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
 }
+
+
