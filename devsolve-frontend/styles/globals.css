@@ -190,7 +190,7 @@ h1 {
 
 .solution-text {
   font-size: 1rem;
-  color: #5e5cfa;
+ 
 }
 
 .solution-votes {
@@ -222,6 +222,8 @@ h1 {
   width: 100%;
   flex-direction: column;
   justify-content: space-between;
+  overflow: hidden;
+  scroll-behavior: smooth;
 }
 
 .answer-cont span {
@@ -412,10 +414,12 @@ code {
 }
 
 .tiptap {
-  min-height: 200px;
+  min-height: 300px;
   padding: 10px;
-  border: 1px solid #ddd;
+  border: 1px solid #dddddd;
   border-radius: 8px;
+  overflow: hidden;
 }
+
 
 

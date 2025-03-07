@@ -1,4 +1,4 @@
-"use client"; // Next.js 13+ me SSR issues fix karta hai
+"use client"; 
 
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
