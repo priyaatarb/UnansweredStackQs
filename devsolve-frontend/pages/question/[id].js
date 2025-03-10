@@ -11,6 +11,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleUp, faAngleDown } from "@fortawesome/free-solid-svg-icons";
 // import Editor from "../../components/Editor";
 import TipTapEditor from "../../components/TipTapEditor";
+import moment from "moment";
+
 
 export default function QuestionPage() {
   const router = useRouter();
@@ -28,7 +30,7 @@ export default function QuestionPage() {
   useEffect(() => {
     if (!session && status !== "loading") {
       signIn();
-    }
+    } 
   }, [session, status]);
 
   useEffect(() => {
@@ -64,13 +66,13 @@ export default function QuestionPage() {
       alert("Insert your answer first before submitting!");
       return;
     }
-  
+    console.log("Submitting solution with user_id:", session?.user?.id); 
     fetch("http://localhost:5000/api/solutions/add", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         question_id: id,
-        user_id: session?.user?.id,
+        user_name: session?.user?.name,
         solution: content.trim(),
       }),
     }).then(() => {
@@ -186,7 +188,12 @@ export default function QuestionPage() {
         <h2>Solutions:</h2>
         <div className="solutions-container">
           {solutions.map((sol) => (
-            <div key={sol.id} className="solution-card">
+           <div>
+            <span>
+              By: {sol.user_name} • {moment(sol.created_at).fromNow()}
+            </span>
+
+            <div key={sol.id} className="solution-card">  
               <div className="button-container">
                 <button
                   className="upvote-btn"
@@ -212,6 +219,7 @@ export default function QuestionPage() {
                 <br />
                 <span>On: {new Date(sol.created_at).toLocaleString()}</span>
               </div>
+            </div>
             </div>
           ))}
         </div>

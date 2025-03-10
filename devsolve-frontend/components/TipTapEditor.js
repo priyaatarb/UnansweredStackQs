@@ -62,7 +62,8 @@ export default function TipTapEditor({ content, setContent, setEditor }) {
         </button>
       </div>
 
-      <EditorContent editor={editor} className="editor" />
+      <EditorContent editor={editor} className="editor" 
+      />
 
       <style jsx>{`
         .editor-container {

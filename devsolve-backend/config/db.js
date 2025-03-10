@@ -88,7 +88,7 @@ createScrapQuestionsTable();
         CREATE TABLE IF NOT EXISTS solutions (
           id SERIAL PRIMARY KEY,
           question_id INTEGER REFERENCES questions(id) ON DELETE CASCADE,
-          user_id INTEGER REFERENCES users(id),
+          user_name TEXT NOT NULL,
           solution TEXT NOT NULL,
           votes INTEGER DEFAULT 0,
           created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP

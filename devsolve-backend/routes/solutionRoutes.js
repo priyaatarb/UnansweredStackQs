@@ -5,17 +5,18 @@ const db = require("../config/db");
 // Submit a solution
 router.post("/add", async (req, res) => {
   try {
-    const { question_id, user_id, solution } = req.body;
+    const { question_id, user_name, solution } = req.body; 
     const newSolution = await db.one(
-      `INSERT INTO solutions (question_id, user_id, solution) 
+      `INSERT INTO solutions (question_id, user_name, solution) 
        VALUES ($1, $2, $3) RETURNING *`,
-      [question_id, user_id, solution]
+      [question_id, user_name, solution]
     );
     res.json(newSolution);
   } catch (err) {
     res.status(500).json({ error: "Failed to submit solution" });
   }
 });
+
 
 // Upvote/Downvote Solution
 router.post("/vote", async (req, res) => {
@@ -36,7 +37,11 @@ router.post("/vote", async (req, res) => {
 router.get("/:question_id", async (req, res) => {
   try {
     const solutions = await db.any(
-      "SELECT * FROM solutions WHERE question_id = $1 ORDER BY created_at DESC",
+      `SELECT s.id, s.solution, s.votes, s.created_at, u.name as user_name 
+       FROM solutions s
+       JOIN users u ON s.user_name = u.name
+       WHERE s.question_id = $1
+       ORDER BY s.created_at DESC`,
       [req.params.question_id]
     );
     res.json(solutions);
@@ -44,6 +49,7 @@ router.get("/:question_id", async (req, res) => {
     res.status(500).json({ error: "Failed to fetch solutions" });
   }
 });
+
 
 router.post("/upvote/:id", async (req, res) => {
   try {
