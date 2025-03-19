@@ -3,13 +3,14 @@ import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Link from "@tiptap/extension-link";
 import Image from "@tiptap/extension-image";
-import { lowlight } from "lowlight"; 
 import Highlight from "@tiptap/extension-highlight";
 import TextAlign from "@tiptap/extension-text-align";
 import Table from "@tiptap/extension-table";
 import TableRow from "@tiptap/extension-table-row";
 import TableCell from "@tiptap/extension-table-cell";
 import TableHeader from "@tiptap/extension-table-header";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBold, faItalic, faHeading, faQuoteRight, faListUl, faListOl, faCode, faAlignLeft, faAlignCenter, faAlignRight, faAlignJustify, faHighlighter, faLink, faImage, faTable } from "@fortawesome/free-solid-svg-icons";
 
 export default function TipTapEditor({ content, setContent, setEditor }) {
   const editor = useEditor({
@@ -17,7 +18,6 @@ export default function TipTapEditor({ content, setContent, setEditor }) {
       StarterKit,
       Link,
       Image,
-      
       Highlight,
       TextAlign.configure({ types: ["heading", "paragraph"] }),
       Table.configure({ resizable: true }),
@@ -43,43 +43,31 @@ export default function TipTapEditor({ content, setContent, setEditor }) {
     <div className="editor-container">
       <div className="toolbar">
         <button onClick={() => editor.chain().focus().toggleBold().run()}>
-          <b>B</b>
+          <FontAwesomeIcon icon={faBold} />
         </button>
         <button onClick={() => editor.chain().focus().toggleItalic().run()}>
-          <i>I</i>
-        </button>
-        <button onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}>
-          H1
-        </button>
-        <button onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}>
-          H2
-        </button>
-        <button onClick={() => editor.chain().focus().toggleBlockquote().run()}>
-          Quote
-        </button>
-        <button onClick={() => editor.chain().focus().toggleBulletList().run()}>
-          UL
+          <FontAwesomeIcon icon={faItalic} />
         </button>
         <button onClick={() => editor.chain().focus().toggleOrderedList().run()}>
-          OL
+          <FontAwesomeIcon icon={faListOl} />
         </button>
         <button onClick={() => editor.chain().focus().toggleCodeBlock().run()}>
-          {"</>"}
+          <FontAwesomeIcon icon={faCode} />
         </button>
         <button onClick={() => editor.chain().focus().setTextAlign("left").run()}>
-          Left
+          <FontAwesomeIcon icon={faAlignLeft} />
         </button>
         <button onClick={() => editor.chain().focus().setTextAlign("center").run()}>
-          Center
+          <FontAwesomeIcon icon={faAlignCenter} />
         </button>
         <button onClick={() => editor.chain().focus().setTextAlign("right").run()}>
-          Right
+          <FontAwesomeIcon icon={faAlignRight} />
         </button>
         <button onClick={() => editor.chain().focus().setTextAlign("justify").run()}>
-          Justify
+          <FontAwesomeIcon icon={faAlignJustify} />
         </button>
         <button onClick={() => editor.chain().focus().toggleHighlight().run()}>
-          Highlight
+          <FontAwesomeIcon icon={faHighlighter} />
         </button>
         <button
           onClick={() => {
@@ -87,7 +75,7 @@ export default function TipTapEditor({ content, setContent, setEditor }) {
             if (url) editor.chain().focus().setLink({ href: url }).run();
           }}
         >
-          Link
+          <FontAwesomeIcon icon={faLink} />
         </button>
         <button
           onClick={() => {
@@ -95,12 +83,10 @@ export default function TipTapEditor({ content, setContent, setEditor }) {
             if (url) editor.chain().focus().setImage({ src: url }).run();
           }}
         >
-          Image
+          <FontAwesomeIcon icon={faImage} />
         </button>
-        <button
-          onClick={() => editor.chain().focus().insertTable({ rows: 3, cols: 3 }).run()}
-        >
-          Table
+        <button onClick={() => editor.chain().focus().insertTable({ rows: 3, cols: 3 }).run()}>
+          <FontAwesomeIcon icon={faTable} />
         </button>
       </div>
 
@@ -111,7 +97,7 @@ export default function TipTapEditor({ content, setContent, setEditor }) {
           border: 1px solid #ddd;
           padding: 10px;
           border-radius: 8px;
-          width: 100%;
+          margin: auto;
           background: #fff;
           box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
         }
@@ -124,37 +110,15 @@ export default function TipTapEditor({ content, setContent, setEditor }) {
           padding: 8px;
           justify-content: space-around;
           border-radius: 6px;
-        }
-
-        .toolbar button {
-          height: 40px;
-          width: 60px;
-          color: black;
-          cursor: pointer;
-          border-radius: 4px;
-          font-size: 1rem;
-          opacity: 0.6;
-          transition: 0.2s ease-in-out;
-          background: none;
-        }
-
-        .toolbar button:hover {
-          opacity: 1;
           background: #f0f0f0;
         }
-
-        .toolbar button.active {
-          font-weight: bold;
-          opacity: 1;
-        }
-
-        .editor {
-          background: white;
-          min-height: 400px;
-          padding: 10px;
-          border: 1px solid #ddd;
-          border-radius: 4px;
-        }
+        .toolbar button {
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-size: 18px;
+            color: rgba(0, 0, 0, 0.5);
+          }
       `}</style>
     </div>
   );

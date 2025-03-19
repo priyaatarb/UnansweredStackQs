@@ -88,7 +88,7 @@ const { id } = router.query;
                   <option value="popularity">Most Voted</option>
                 </select>
 
-                <button onClick={fetchQuestions}>Apply</button>
+                <button className="button" onClick={fetchQuestions}>Apply</button>
               </span>
           </div>
         </div>

@@ -17,7 +17,7 @@ export default function Navbar() {
         <Link href="/">
           <h2 className="logo">DevSolve</h2>
         </Link>
-        <p>Welcome, {session?.user?.name || "Guest"}</p>
+       
       </div>
       <div className="nav-links">
         <Link href="/" className={router.pathname === "/" ? "active" : ""}>
@@ -27,12 +27,15 @@ export default function Navbar() {
           About
         </Link>
       </div>
+      <div className="user">
+      <p>Welcome, {session?.user?.name || "Guest"}</p>
       <div>
         {session ? (
-          <button onClick={handleLogout}>Logout</button>
+          <button className="button" onClick={handleLogout}>Logout</button>
         ) : (
-          <button onClick={() => signIn()}>Login</button>
+          <button className="button" onClick={() => signIn()}>Login</button>
         )}
+      </div>
       </div>
     </nav>
   );

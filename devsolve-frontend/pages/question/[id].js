@@ -167,7 +167,7 @@ export default function QuestionPage() {
             </button>
           </>
         )}
-
+        <br/>
         <p className="tag-container">
           {question?.tags?.map((tag, index) => (
             <span key={index} className="tag-item">
@@ -181,20 +181,24 @@ export default function QuestionPage() {
         <TipTapEditor content={content} setContent={setContent} setEditor={setEditor} />
         <br/>
 
-        <button className="submit-btn" onClick={submitSolution}>
+        <button className="submit-btn button" onClick={submitSolution}>
           Submit Solution
         </button>
-
+        <br/>
+        <br/>
         <h2>Solutions:</h2>
         <div className="solutions-container">
           {solutions.map((sol) => (
            <div>
             <br/>
-            <span>
-              By: {sol.user_name} • {moment(sol.created_at).fromNow()}
-            </span>
-            <br/>
-            <br/>
+            <div className="user-info">
+            <div className="profile-pic-container">
+            <img src="https://api.dicebear.com/7.x/avataaars/svg" alt="User Avatar" />
+            </div>
+              <div className="user-name">{sol.user_name}</div>
+              <div className="reverse-time"> {moment(sol.created_at).fromNow()}</div>
+            </div>
+            <br/>   
             <div key={sol.id} className="solution-card">  
               <div className="button-container">
                 <button
@@ -219,7 +223,7 @@ export default function QuestionPage() {
                   <p className="solution-text">{sol.solution}</p>
                 )}
                 <br />
-                <span>On: {new Date(sol.created_at).toLocaleString()}</span>
+
               </div>
             </div>
             </div>
