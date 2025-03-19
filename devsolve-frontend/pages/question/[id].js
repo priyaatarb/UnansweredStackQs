@@ -189,10 +189,12 @@ export default function QuestionPage() {
         <div className="solutions-container">
           {solutions.map((sol) => (
            <div>
+            <br/>
             <span>
               By: {sol.user_name} • {moment(sol.created_at).fromNow()}
             </span>
-
+            <br/>
+            <br/>
             <div key={sol.id} className="solution-card">  
               <div className="button-container">
                 <button
