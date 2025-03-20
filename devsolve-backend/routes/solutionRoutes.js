@@ -37,11 +37,10 @@ router.post("/vote", async (req, res) => {
 router.get("/:question_id", async (req, res) => {
   try {
     const solutions = await db.any(
-      `SELECT s.id, s.solution, s.votes, s.created_at, u.name as user_name 
-       FROM solutions s
-       JOIN users u ON s.user_name = u.name
-       WHERE s.question_id = $1
-       ORDER BY s.created_at DESC`,
+      `SELECT id, solution, votes, created_at, user_name 
+       FROM solutions 
+       WHERE question_id = $1
+       ORDER BY created_at DESC`,
       [req.params.question_id]
     );
     res.json(solutions);

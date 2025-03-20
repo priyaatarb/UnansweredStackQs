@@ -10,6 +10,8 @@ body {
   background-color: #f6f6f6;
   color: #333;
   padding: 20px;
+  height: 90vh;
+  overflow: auto;
 }
 
 .navbar {
@@ -32,8 +34,9 @@ body {
   border-radius: 20px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  width: 15%;
+  justify-content: space-around;
+  width: 20%;
+
  
 }
 
@@ -42,12 +45,23 @@ body {
 .nav-links a {
   padding: 10px;
   border-radius: 20px;
+
  
+}
+
+.nav-links a:hover {
+  text-align: center;
+  color: white;
+  background-color:#1f2125;
+  transition:.1s ease-in-out;
 }
 
 .nav-links a.active {
   font-weight: bold;
   color:white;
+  width: 50%;
+  transition:.1s ease-in-out;
+  text-align: center;
   background-color:#1f2125;
  
 }
@@ -91,24 +105,50 @@ body {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+.question-container p{
+  font-size: 12px;
+
+}
+
 .main-heading {
-  margin-top: 60px;
+  margin-top:10vh;
   text-align: center;
   color: rgb(0, 0, 0);
  
 }
 
 #__next{
-  
+  overflow:auto;
   width: 70vw;
   margin: auto;
+  scroll-behavior: smooth;
 }
 
 .logo {
-  color: BLACK;
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  position: relative;
   display: inline-block;
-  cursor: pointer;
-  transition: ease-in-out 0.3s;
+  background: linear-gradient(45deg, #333, #333 50%,  #555252 50%);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shine 5s infinite linear;
+}
+
+@keyframes shine {
+  0% {
+    background-position: 200% 200%;
+  }
+  100% {
+    background-position: -200% -200%;
+  }
+}
+
+.question-text{
+  width: 100%;
+  padding: 5px;
 }
 
 
@@ -135,6 +175,11 @@ body {
   display: inline-block;
 }
 
+.question-content{
+  text-align: justify;
+  font-size: 12px;
+
+}
 
 
 .read-more-btn {
@@ -159,6 +204,7 @@ body {
   margin: auto;
   display: flex;
   padding: 10px;
+  font-size: 12px;
   border-radius: 10px;
   background: #f8f8f8;
   box-shadow: 0px 2px 5px #d4d2d2;
@@ -241,9 +287,14 @@ body {
   font-size: smaller;
 }
 
+.nav-links a{
+  text-decoration: none;
+  color: black;
+}
+
 a {
   text-decoration: none;
-  color: #3b1650;
+  color: #3120c7;
   font-weight: bold;
 }
 
@@ -275,21 +326,23 @@ a {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgb(136, 6, 223);
+  background: #1f2125;
   border-radius: 55px;
 }
 
 
-
-
-
-ul {
+#__next ul {
   margin: 0;
-  padding: 0;
+  padding: 10px;
+  overflow: auto;
+  max-height: 70vh;
+  scroll-behavior: smooth;
+  border-radius: 20px;
 
 }
 
-li {
+#__next ul li {
+  display: flex;
   text-align: justify;
   padding: 10px;
   border-bottom: 2px solid white;
@@ -298,6 +351,7 @@ li {
   list-style-type: none;
   font-size: 1rem;
   text-wrap: wrap;
+  overflow: auto;
   background-color:white;
 }
 
@@ -306,9 +360,7 @@ li p {
   color: #333;
 }
 
-.question-card {
-  display: flex;
-}
+
 
 .question-info {
   width: 15%;
@@ -380,39 +432,36 @@ span button {
 
 .about-container {
   display: flex;
+  overflow: hidden;
   justify-content: center;
   align-items: end;
   flex-direction: column;
-  margin-top: 100px;
   padding: 20px;
-  height: 100vh;
+  height: 70vh;
+  WIDTH: 80%;
+  margin: auto;
   background-size: cover;
   background-position: center;
   color: white;
-  margin-top: 0;
-  margin-left: -20px;
-  margin-right: -20px;
 }
 
 .text-box {
-  margin: auto;
-  width: 50%;
+  width: 90%;
   padding: 20px;
-  background: rgba(255,255,255, 0.5);
-  box-shadow:5px 5px 5px rgba(0, 0, 0, 0.1);
-  color:black;
-  border-radius: 10px;
+  background-color:#d1c4e9;
+  box-shadow:5px 5px 30px rgba(0, 0, 0, 0.1);
+  color:#1f2125;
+  border-radius: 20px;
   text-align: center;
 }
 
 .text-box > h1 {
   font-size: 2rem;
-  color:black;
 }
 
 .text-box > p {
   font-size: 1rem;
-  color:black;
+ 
 }
 
 pre {
@@ -430,6 +479,10 @@ code span {
 code {
   color: white;
   font-family: "Fira Code", monospace;
+}
+
+p code{
+  color:#161515;
 }
 
 .tiptap {

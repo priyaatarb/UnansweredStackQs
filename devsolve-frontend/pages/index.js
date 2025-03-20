@@ -67,7 +67,7 @@ const { id } = router.query;
     <div>
       
       <div>
-        <h1 className="main-heading">Unanswered StackOverflow Questions</h1>
+        <h1 className="main-heading">Unanswered Tech Questions</h1>
 
         <div className="filter-bar">
           <div className="span-div">

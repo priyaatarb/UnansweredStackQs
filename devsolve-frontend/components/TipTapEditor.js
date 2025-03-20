@@ -48,6 +48,9 @@ export default function TipTapEditor({ content, setContent, setEditor }) {
         <button onClick={() => editor.chain().focus().toggleItalic().run()}>
           <FontAwesomeIcon icon={faItalic} />
         </button>
+        <button onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}>
+          <FontAwesomeIcon icon={faHeading} />
+        </button>
         <button onClick={() => editor.chain().focus().toggleOrderedList().run()}>
           <FontAwesomeIcon icon={faListOl} />
         </button>
@@ -85,9 +88,7 @@ export default function TipTapEditor({ content, setContent, setEditor }) {
         >
           <FontAwesomeIcon icon={faImage} />
         </button>
-        <button onClick={() => editor.chain().focus().insertTable({ rows: 3, cols: 3 }).run()}>
-          <FontAwesomeIcon icon={faTable} />
-        </button>
+        
       </div>
 
       <EditorContent editor={editor} className="editor" />
