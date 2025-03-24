@@ -143,7 +143,7 @@ export default function QuestionPage() {
         <h1 className="question-title">{question?.title}</h1>
         {!showFullQuestion ? (
           <>
-            <p>
+            <p className="question-summary">
               {question?.summary}
               <button
                 className="read-more-btn"

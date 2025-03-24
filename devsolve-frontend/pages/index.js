@@ -82,7 +82,7 @@ const { id } = router.query;
               </span>
               <span>
                 <label>Sort by:</label>
-                <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
+                <select value={sortBy} onChange={(e) => setSortBy(e.target.value)} >
                   <option value="">None</option>
                   <option value="difficulty">Recently Added</option>
                   <option value="popularity">Most Voted</option>

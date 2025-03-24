@@ -23,16 +23,7 @@ export default function App({ Component, pageProps }) {
   return (
     <SessionProvider session={pageProps.session}>
       
-      <Head>
-        <link
-          href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css"
-          rel="stylesheet"
-        />
-        <script
-          src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"
-          defer
-        ></script>
-      </Head>
+     
       
       <Navbar />
       <AuthGuard>

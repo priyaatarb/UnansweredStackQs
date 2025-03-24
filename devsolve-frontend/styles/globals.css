@@ -51,15 +51,12 @@ body {
 
 .nav-links a:hover {
   text-align: center;
-  color: white;
-  background-color:#1f2125;
-  transition:.1s ease-in-out;
 }
 
 .nav-links a.active {
   font-weight: bold;
   color:white;
-  width: 50%;
+  width: 60%;
   transition:.1s ease-in-out;
   text-align: center;
   background-color:#1f2125;
@@ -105,8 +102,8 @@ body {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.question-container p{
-  font-size: 12px;
+.question-summary{
+  font-size: 14 px;
 
 }
 
@@ -127,12 +124,13 @@ body {
 .logo {
   font-size: 24px;
   font-weight: bold;
-  color: #333;
+  color: #000000;
   position: relative;
   display: inline-block;
   background: linear-gradient(45deg, #333, #333 50%,  #555252 50%);
   background-size: 200% 200%;
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: shine 5s infinite linear;
 }
@@ -177,7 +175,7 @@ body {
 
 .question-content{
   text-align: justify;
-  font-size: 12px;
+  font-size: 16px;
 
 }
 
@@ -266,7 +264,7 @@ body {
 
 .upvote-btn:hover,
 .downvote-btn:hover {
-  background-color: #5e5cfa;
+  background-color: #1f2125;
   color: white;
 }
 
@@ -497,4 +495,5 @@ p code{
   max-height: 70vh;
   scroll-behavior: smooth;
   overflow: auto;
+  font-size: 14px;
 }
