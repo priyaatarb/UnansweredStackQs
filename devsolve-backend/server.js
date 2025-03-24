@@ -18,6 +18,7 @@ app.use(cors({
 
 // Health Check Route for checking the database connection
 app.get("/api/health", async (req, res) => {
+  console.log("checking");
   try {
     const result = await db.query("SELECT 1");  
     res.json({ status: "OK", database: "Connected" });
