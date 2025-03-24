@@ -6,9 +6,12 @@ const router = express.Router();
 // GET all questions
 router.get("/", async (req, res) => {
   try {
-    let { tag, sortBy } = req.query;
-    
-    
+    let { tag, sortBy, page, limit } = req.query;
+
+    page = parseInt(page) || 1; // Default page 1
+    limit = parseInt(limit) ||5// Default limit 5
+    const offset = (page - 1) * limit; // Offset calculation
+
     let query = `
       SELECT 
         q.id, 
@@ -23,34 +26,44 @@ router.get("/", async (req, res) => {
       LEFT JOIN solutions s ON s.question_id = q.id
     `;
 
+    let countQuery = `SELECT COUNT(*) FROM scrapquestions`; // Count total questions
     let params = [];
 
-    
     if (tag) {
       query += " WHERE q.tags::text ILIKE $1";
+      countQuery += " WHERE tags::text ILIKE $1";
       params.push(`%${tag}%`);
     }
 
     query += " GROUP BY q.id, q.title, q.link, q.summary, q.votes, q.tags, q.created_at";
 
-   
     if (sortBy) {
       if (sortBy === "popularity") {
-        query += " ORDER BY vote_count DESC"; 
+        query += " ORDER BY vote_count DESC";
       } else if (sortBy === "recent") {
-        query += " ORDER BY q.created_at DESC"; 
+        query += " ORDER BY q.created_at DESC";
       }
     } else {
-      query += " ORDER BY q.created_at DESC"; 
+      query += " ORDER BY q.created_at DESC";
     }
 
+    query += ` LIMIT ${limit} OFFSET ${offset}`; // Apply pagination
+
     const questions = await db.any(query, params);
-    res.json(questions);
+    const totalCount = await db.one(countQuery, params);
+
+    res.json({
+      questions,
+      total: totalCount.count,
+      page,
+      pages: Math.ceil(totalCount.count / limit),
+    });
   } catch (err) {
     console.error("Error fetching questions:", err);
     res.status(500).json({ error: "Failed to fetch questions" });
   }
 });
+
 
 
 
