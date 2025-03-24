@@ -12,7 +12,7 @@ app.use(express.json());
 
 // Improved CORS settings (Allow frontend and API clients)
 app.use(cors({
-  origin: ["http://localhost:3000 || https://devsolve-plum.vercel.app/", "http://localhost:5000"], 
+  origin: ["http://localhost:3000", "http://localhost:5000"], 
   credentials: true
 }));
 
